@@ -12,13 +12,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     @IBOutlet weak var tvMain: UITableView!
     
-    var items = ["NSUserdefault":"Use NSUserdefault to save data","Plist file":"Import plist file to manage data","CoreData":"Choose check box CoreData when new project", "SQLlite":"Using SQLlite packed", "Text file":"Import file text to manage data", "XML file":"Using XML file to manage data"]
+    var items = ["NSUserdefault":"Use NSUserdefault to save data","Plist file":"Import plist file to manage data","CoreData":"Usign CoreData to manage Data", "SQLlite":"Using SQLlite packed", "Text file":"Import file text to manage data", "XML file":"Using XML file to manage data"]
+    
+    var arrayKeys: [String] = []
+    
+    var arrayValues: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         self.tvMain.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        arrayKeys = [String](items.keys)
+        
+        arrayValues = [String](items.values)
         
     }
 
@@ -35,24 +43,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "Cell")
         
-        var arrayKeys = [String](items.keys)
-        
-        var arrayValues = [String](items.values)
-        
         cell.textLabel?.text = arrayKeys[indexPath.row]
         
         cell.textLabel?.textColor = UIColor.blueColor()
         
         cell.detailTextLabel?.text = arrayValues[indexPath.row]
         
+        cell.detailTextLabel?.font = UIFont(name: "AmericanTypewriter-CondensedLight", size: 13)
+               
+        cell.imageView?.image = UIImage(named: arrayKeys[indexPath.row])
+        
         return cell
     }
     
     func tableView(tvMain: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        
-        
+
+        self.performSegueWithIdentifier("segueContact", sender: nil)
+
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIView.animateWithDuration(0.25, animations:
+            { cell.layer.transform = CATransform3DMakeScale(1,1,1) })
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue,
+        sender: AnyObject!){
+            
+            let indexPath : NSIndexPath = self.tvMain.indexPathForSelectedRow()!
+            //make sure that the segue is going to secondViewController
+            let contact = segue.destinationViewController as ContactVC
+            contact.keyType = self.arrayKeys[indexPath.row]
+            
+    }
 }
 

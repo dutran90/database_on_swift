@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>991EAA6E-61E4-4A56-A729-643AE23165B8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DatabaseTypeOnSwift</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AE969811DE0B506CF8779A0914B48584D03B41B3</key>
+		<string>https://github.com/dutran90/database_on_swift.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DatabaseTypeOnSwift.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AE969811DE0B506CF8779A0914B48584D03B41B3</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dutran90/database_on_swift.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AE969811DE0B506CF8779A0914B48584D03B41B3</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AE969811DE0B506CF8779A0914B48584D03B41B3</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DatabaseTypeOnSwift</string>
+		</dict>
+	</array>
+</dict>
+</plist>
