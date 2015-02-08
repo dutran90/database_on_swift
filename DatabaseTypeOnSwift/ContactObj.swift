@@ -10,15 +10,15 @@ import Foundation
 
 class ContactObj {
     
-    var id: Int?
+    var id = ""
     
-    var name: String?
+    var name = ""
     
-    var phone: String?
+    var phone = ""
     
-    var email: String?
+    var email = ""
     
-    var avatar: NSData?
+    var avatar = ""
     
 //    func validName(name:String) -> Bool{
 //        

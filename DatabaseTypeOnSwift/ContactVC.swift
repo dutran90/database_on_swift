@@ -18,9 +18,18 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var barbtnBack: UIBarButtonItem!
     @IBOutlet weak var tbvContact: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    
+    var contact: ContactObj?
+    
     override func viewDidLoad() {
         
         println(self.keyType)
+        
+        if keyType == "NSUserdefault"{
+            
+//            var udContact = ud
+            
+        }
 
     }
     

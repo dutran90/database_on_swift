@@ -72,6 +72,15 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
         if validEmail == true && validPhone == true{
             var dicContact = ["name":tfName.text, "phone":tfPhone.text, "email":tfEmail.text]
             addNewSuccess = addNewContact(dicContact)
+//            var contact = ContactObj()
+//            contact.name = tfName.text
+//            contact.phone = tfPhone.text
+//            contact.email = tfEmail.text
+//            contact.avatar = ""
+//            contact.id = ""
+//            
+//            addNewSuccess = addNewContact(contact)
+            
         }
         
     }
@@ -101,6 +110,33 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
         }
         
     }
+    
+//    func addNewContact (contact: ContactObj) -> Bool{
+//        
+//        
+//        if validName(contact.name) {
+//            
+//            var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+//            if (udContact.valueForKey("arrObjContact") != nil){
+//                var arrObjContact = udContact.valueForKey("arrObjContact") as [ContactObj]
+//                arrObjContact.append(contact)
+//                udContact.setValue(arrObjContact, forKey: "arrObjContact")
+//                udContact.synchronize()
+//                return true
+//            }else{
+//                var arrObjContact = [contact]
+//                udContact.setObject(arrObjContact, forKey: "arrObjContact")
+//                udContact.synchronize()
+//                return true
+//            }
+//            
+//            
+//        }else{
+//            return false
+//        }
+//        
+//    }
+
 
     func validName(name:String) -> Bool{
         
@@ -129,10 +165,36 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
         
         return false
         
+//        if keyType == "NSUserdefault"{
+//            
+//            var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+//            if (udContact.valueForKey("arrObjContact") != nil){
+//                var arrObjContact = udContact.valueForKey("arrObjContact") as NSArray
+//                
+//                var arrName = []
+//                var obj: NSDictionary
+//                for obj in arrObjContact {
+//                    var name1 = obj.name as String
+//                    if name == name1{
+//                        
+//                        self.validName = false
+//                        return false
+//                    }
+//                }
+//            }
+//            
+//            self.validName = true
+//            return true
+//        
+//        }
+//        
+//        return false
+        
+        
     }
     
     override func shouldPerformSegueWithIdentifier(segue: String?, sender: AnyObject?) -> Bool{
-        if segue == "segueAddNew"{
+        if segue == "segueSave"{
             submitTapped(self)
             if addNewSuccess{
                 return true
