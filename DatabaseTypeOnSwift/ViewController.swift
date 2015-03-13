@@ -28,6 +28,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         arrayValues = [String](items.values)
         
+//        //
+//        var shotPercentageInt: Int
+//        shotPercentageInt = Int(0.6)
+//        println("\(shotPercentageInt*100)%") // 0% because 3/5 = 0.6 -> Int = 0
+//        
+//        //
+//        var shotPercentageFloat: Float
+//        shotPercentageFloat = 3/5
+//        println("\(shotPercentageFloat*100)%") // 60.0% because 3/5 = 0.6 -> Float = 60%
+//        
+//        // Convert Float to Int
+//        var shotPercentageFloatToInt: Int
+//        shotPercentageFloatToInt = Int(shotPercentageFloat)
+//        println("\(shotPercentageFloat)") // 0.6
     }
 
     override func didReceiveMemoryWarning() {

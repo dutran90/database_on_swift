@@ -67,7 +67,7 @@
                                     <navigationItem title="Contact" id="4ic-3W-SpV">
                                         <barButtonItem key="leftBarButtonItem" title="&lt; Home" id="bEm-Ce-D9w">
                                             <connections>
-                                                <segue destination="BYZ-38-t0r" kind="presentation" modalTransitionStyle="flipHorizontal" id="iYu-52-ygb"/>
+                                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="segueBack" id="6TM-5I-X6x"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="New &gt;" id="hEa-Rv-1dg">
@@ -81,6 +81,9 @@
                             <searchBar contentMode="redraw" placeholder="search name" translatesAutoresizingMaskIntoConstraints="NO" id="CGz-Rk-wcu">
                                 <rect key="frame" x="0.0" y="65" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="0mf-xd-GpJ" id="F4e-uO-Gsk"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="rG5-Js-s3J">
                                 <rect key="frame" x="0.0" y="109" width="600" height="411"/>

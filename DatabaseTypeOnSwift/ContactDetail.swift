@@ -27,6 +27,11 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
     var validName = false
     var addNewSuccess = false
     
+    //Selected Detail
+    var selectedName: String?
+    var selectedPhone: String?
+    var selectedEmail: String?
+    
     override func viewDidLoad() {
         
         //valid mail and phone
@@ -45,6 +50,13 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
             textField: tfPhone,
             rules: [.Required, .PhoneNumber]
         )
+        
+        //show detail
+        if self.checkNew == false{
+            tfName.text = selectedName
+            tfPhone.text = selectedPhone
+            tfEmail.text = selectedEmail
+        }
         
     }
     
@@ -87,27 +99,56 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
     
     func addNewContact (dicContact: NSDictionary) -> Bool{
         
-        
-        if validName(dicContact["name"] as String) {
-            
-            var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-            if (udContact.valueForKey("arrDicContact") != nil){
-                var arrDicContact = udContact.valueForKey("arrDicContact") as [NSDictionary]
-                arrDicContact.append(dicContact)
-                udContact.setValue(arrDicContact, forKey: "arrDicContact")
-                udContact.synchronize()
-                return true
+        if checkNew == true{
+            if validName(dicContact["name"] as String) {
+                
+                var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                if (udContact.valueForKey("arrDicContact") != nil){
+                    var arrDicContact = udContact.valueForKey("arrDicContact") as [NSDictionary]
+                    arrDicContact.append(dicContact)
+                    udContact.setValue(arrDicContact, forKey: "arrDicContact")
+                    udContact.synchronize()
+                    return true
+                }else{
+                    var arrDicContact = [dicContact]
+                    udContact.setValue(arrDicContact, forKey: "arrDicContact")
+                    udContact.synchronize()
+                    return true
+                }
+                
+                
             }else{
-                var arrDicContact = [dicContact]
-                udContact.setValue(arrDicContact, forKey: "arrDicContact")
-                udContact.synchronize()
-                return true
+                return false
             }
-
-            
         }else{
-            return false
+            if validName(dicContact["name"] as String) || (dicContact["name"] as? String == selectedName){
+                
+                var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                if (udContact.valueForKey("arrDicContact") != nil){
+                    var arrDicContact = udContact.valueForKey("arrDicContact") as [NSDictionary]
+
+                    for (idx, dic) in enumerate(arrDicContact){
+                        if dic.valueForKey("name") as? String == selectedName{
+                            arrDicContact[idx] = dicContact
+                        }
+                    }
+                    
+                    udContact.setValue(arrDicContact, forKey: "arrDicContact")
+                    udContact.synchronize()
+                    return true
+                }else{
+                    var arrDicContact = [dicContact]
+                    udContact.setValue(arrDicContact, forKey: "arrDicContact")
+                    udContact.synchronize()
+                    return true
+                }
+                
+                
+            }else{
+                return false
+            }
         }
+
         
     }
     
@@ -205,4 +246,11 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
             return true
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let contactVC = segue.destinationViewController as ContactVC
+        contactVC.keyType = keyType
+        println("\(contactVC.keyType)")
+    }
+    
 }
