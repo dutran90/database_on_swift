@@ -44,6 +44,13 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             
         }
         
+        if keyType == "Plist file"{
+        
+            (arrName, arrPhone, arrMail) = getContactFromPlist()
+            (filteredName, filteredPhone, filteredMail) = ([],[],[])
+            
+        }
+        
         tbvContact.reloadData()
 
     }
@@ -101,6 +108,12 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         return cell
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIView.animateWithDuration(0.25, animations:
+            { cell.layer.transform = CATransform3DMakeScale(1,1,1) })
+    }
+    
     // use delete action cell
     func tableView(tbvContact: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{
@@ -119,7 +132,12 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 
             tbvContact.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
             //delete on database
-            delContactFromNS(name)
+            if keyType == "NSUserdefault"{
+                delContactFromNS(name)
+            }
+            if keyType == "Plist file"{
+                delContactFromPlist(name)
+            }
         }
     }
     
@@ -168,6 +186,27 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
     }
     
+    func getContactFromPlist() -> ([String], [String], [String]){
+        
+        var arrName = [String]()
+        var arrPhone = [String]()
+        var arrEmail = [String]()
+        
+        let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
+        
+        var content = NSArray(contentsOfFile: path)
+        
+        println(content)
+
+        for dic in content!{
+            arrName.append(dic.valueForKey("name") as String)
+            arrPhone.append(dic.valueForKey("phone") as String)
+            arrMail.append(dic.valueForKey("mail") as String)
+        }
+        
+        return (arrName,arrPhone,arrMail)
+    }
+    
     func delContactFromNS(name: String) {
         let ud = NSUserDefaults.standardUserDefaults()
         let arrDic = ud.valueForKey("arrDicContact") as NSMutableArray
@@ -177,6 +216,21 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 println("Array Dic after delete \(arrDic)")
             }
         }
+    }
+    
+    func delContactFromPlist(name: String) {
+        let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
+        
+        var content = NSMutableArray(contentsOfFile: path)!
+        
+        for (idx, dic) in enumerate(content){
+            if dic["name"] as String == name{
+                content.removeObject(dic)
+            }
+        }
+        
+        content.writeToFile(path, atomically: true)
+        
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

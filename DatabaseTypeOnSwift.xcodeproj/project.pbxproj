@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A713D0FE1AB2DD30007B8AFE /* contact.plist in Resources */ = {isa = PBXBuildFile; fileRef = A713D0FD1AB2DD30007B8AFE /* contact.plist */; };
 		A76E13001A6F46D40017C497 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76E12FF1A6F46D40017C497 /* AppDelegate.swift */; };
 		A76E13031A6F46D40017C497 /* DatabaseTypeOnSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A76E13011A6F46D40017C497 /* DatabaseTypeOnSwift.xcdatamodeld */; };
 		A76E13051A6F46D40017C497 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76E13041A6F46D40017C497 /* ViewController.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A713D0FD1AB2DD30007B8AFE /* contact.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = contact.plist; sourceTree = "<group>"; };
 		A76E12FA1A6F46D30017C497 /* DatabaseTypeOnSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatabaseTypeOnSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76E12FE1A6F46D40017C497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A76E12FF1A6F46D40017C497 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				A7D929A41A70EF1400AACA35 /* ZipCodeValidation.swift */,
 				A76E13221A6F622B0017C497 /* Images */,
 				A76E12FE1A6F46D40017C497 /* Info.plist */,
+				A713D0FD1AB2DD30007B8AFE /* contact.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				A7D3A2751A70A61600DF2373 /* XML file.png in Resources */,
 				A76E13081A6F46D40017C497 /* Main.storyboard in Resources */,
 				A7D3A2781A70A61600DF2373 /* CoreData.png in Resources */,
+				A713D0FE1AB2DD30007B8AFE /* contact.plist in Resources */,
 				A7D3A27A1A70A68F00DF2373 /* NSUserdefault.png in Resources */,
 				A7D3A26F1A70A4C400DF2373 /* Plist file.png in Resources */,
 				A76E130D1A6F46D40017C497 /* LaunchScreen.xib in Resources */,
