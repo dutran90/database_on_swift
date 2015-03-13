@@ -2,6 +2,7 @@
 Project to learn how to use many types database on swift! Let enjoy it.
 
 Enumerate: Array, mutable array, [NSDictionary],...
+
   for (idx, dic) in enumerate(content){
             if dic["name"] as String == name{
                 content.removeObject(dic)
@@ -9,6 +10,7 @@ Enumerate: Array, mutable array, [NSDictionary],...
         }
 
 3D Transition in tableview
+
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
         UIView.animateWithDuration(0.25, animations:
@@ -16,6 +18,7 @@ Enumerate: Array, mutable array, [NSDictionary],...
     }
 
 Send data between 2 ViewController
+
       override func prepareForSegue(segue: UIStoryboardSegue,
         sender: AnyObject!){
             
@@ -27,6 +30,7 @@ Send data between 2 ViewController
     }
 
 Call segue and send data
+
       func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //edit
         
@@ -39,10 +43,12 @@ Call segue and send data
             
 
 Delete action cell
+
   func tableView(tbvContact: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == UITableViewCellEditingStyle.Delete{...
 
 SearchBar textDidChange
+
   func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
         if searchBar.text.isEmpty{
             is_searching = false
@@ -67,12 +73,14 @@ SearchBar textDidChange
     }
 
 Get and update file plist
+
   let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
   var content = NSArray(contentsOfFile: path)
   ...modify content
   content.writeToFile(path, atomically: true)
 
 Get and update NSUserDefault
+
     var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
     udContact.setValue(arrDicContact, forKey: "arrDicContact")
     udContact.synchronize()
