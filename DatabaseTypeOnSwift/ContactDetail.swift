@@ -82,8 +82,15 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
         validator.validateFieldByKey(Fields[1], delegate:self)
         
         if validEmail == true && validPhone == true{
-            var dicContact = ["name":tfName.text, "phone":tfPhone.text, "email":tfEmail.text]
-            addNewSuccess = addNewContact(dicContact)
+            var dicContact: NSDictionary?
+            if keyType == "NSUserdefault"{
+                dicContact = ["name":tfName.text, "phone":tfPhone.text, "email":tfEmail.text]
+            }
+            if keyType == "Plist file"{
+                dicContact = ["name":tfName.text, "phone":tfPhone.text, "mail":tfEmail.text]
+            }
+            
+            addNewSuccess = addNewContact(dicContact!)
 //            var contact = ContactObj()
 //            contact.name = tfName.text
 //            contact.phone = tfPhone.text
@@ -98,57 +105,95 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
     }
     
     func addNewContact (dicContact: NSDictionary) -> Bool{
-        
-        if checkNew == true{
-            if validName(dicContact["name"] as String) {
-                
-                var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                if (udContact.valueForKey("arrDicContact") != nil){
-                    var arrDicContact = udContact.valueForKey("arrDicContact") as [NSDictionary]
-                    arrDicContact.append(dicContact)
-                    udContact.setValue(arrDicContact, forKey: "arrDicContact")
-                    udContact.synchronize()
-                    return true
-                }else{
-                    var arrDicContact = [dicContact]
-                    udContact.setValue(arrDicContact, forKey: "arrDicContact")
-                    udContact.synchronize()
-                    return true
-                }
-                
-                
-            }else{
-                return false
-            }
-        }else{
-            if validName(dicContact["name"] as String) || (dicContact["name"] as? String == selectedName){
-                
-                var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-                if (udContact.valueForKey("arrDicContact") != nil){
-                    var arrDicContact = udContact.valueForKey("arrDicContact") as [NSDictionary]
-
-                    for (idx, dic) in enumerate(arrDicContact){
-                        if dic.valueForKey("name") as? String == selectedName{
-                            arrDicContact[idx] = dicContact
-                        }
+        if keyType == "NSUserdefault"{
+            if checkNew == true{
+                if validName(dicContact["name"] as String) {
+                    
+                    var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                    if (udContact.valueForKey("arrDicContact") != nil){
+                        var arrDicContact = udContact.valueForKey("arrDicContact") as [NSDictionary]
+                        arrDicContact.append(dicContact)
+                        udContact.setValue(arrDicContact, forKey: "arrDicContact")
+                        udContact.synchronize()
+                        return true
+                    }else{
+                        var arrDicContact = [dicContact]
+                        udContact.setValue(arrDicContact, forKey: "arrDicContact")
+                        udContact.synchronize()
+                        return true
                     }
                     
-                    udContact.setValue(arrDicContact, forKey: "arrDicContact")
-                    udContact.synchronize()
-                    return true
+                    
                 }else{
-                    var arrDicContact = [dicContact]
-                    udContact.setValue(arrDicContact, forKey: "arrDicContact")
-                    udContact.synchronize()
-                    return true
+                    return false
                 }
-                
-                
             }else{
-                return false
+                if validName(dicContact["name"] as String) || (dicContact["name"] as? String == selectedName){
+                    
+                    var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+                    if (udContact.valueForKey("arrDicContact") != nil){
+                        var arrDicContact = udContact.valueForKey("arrDicContact") as [NSDictionary]
+                        
+                        for (idx, dic) in enumerate(arrDicContact){
+                            if dic.valueForKey("name") as? String == selectedName{
+                                arrDicContact[idx] = dicContact
+                            }
+                        }
+                        
+                        udContact.setValue(arrDicContact, forKey: "arrDicContact")
+                        udContact.synchronize()
+                        return true
+                    }else{
+                        var arrDicContact = [dicContact]
+                        udContact.setValue(arrDicContact, forKey: "arrDicContact")
+                        udContact.synchronize()
+                        return true
+                    }
+                    
+                    
+                }else{
+                    return false
+                }
             }
         }
-
+ 
+        if keyType == "Plist file"{
+        
+            if checkNew == true{
+                if validName(dicContact["name"] as String) {
+                    
+                    let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
+                    var content = NSMutableArray(contentsOfFile: path)!
+                    
+                    content.addObject(dicContact)
+                    content.writeToFile(path, atomically: true)
+                    
+                    return true
+                    
+                }else{
+                    return false
+                }
+                
+            }else{
+                if validName(dicContact["name"] as String) || (dicContact["name"] as? String == selectedName){
+                    
+                    let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
+                    var content = NSMutableArray(contentsOfFile: path)!
+                        for (idx, dic) in enumerate(content){
+                            if dic.valueForKey("name") as? String == selectedName{
+                                content[idx] = dicContact
+                                content.writeToFile(path, atomically: true)
+                                return true
+                            }
+                        }
+                }else{
+                    return false
+                }
+            }
+        
+        }
+        
+        return false
         
     }
     
@@ -204,33 +249,27 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
         
         }
         
+        if keyType == "Plist file"{
+            
+            let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
+            var content = NSArray(contentsOfFile: path)
+            
+            if (content != nil){
+                for (idx, dic) in enumerate(content!){
+                    var name1 = dic.valueForKey("name") as String
+                    if name == name1{
+                        self.validName = false
+                        return false
+                    }
+                }
+            }
+            
+            self.validName = true
+            return true
+        
+        }
+        
         return false
-        
-//        if keyType == "NSUserdefault"{
-//            
-//            var udContact: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-//            if (udContact.valueForKey("arrObjContact") != nil){
-//                var arrObjContact = udContact.valueForKey("arrObjContact") as NSArray
-//                
-//                var arrName = []
-//                var obj: NSDictionary
-//                for obj in arrObjContact {
-//                    var name1 = obj.name as String
-//                    if name == name1{
-//                        
-//                        self.validName = false
-//                        return false
-//                    }
-//                }
-//            }
-//            
-//            self.validName = true
-//            return true
-//        
-//        }
-//        
-//        return false
-        
         
     }
     

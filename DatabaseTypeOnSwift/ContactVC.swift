@@ -194,17 +194,17 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
         
-        var content = NSArray(contentsOfFile: path)
+        var content = NSMutableArray(contentsOfFile: path)
         
         println(content)
 
         for dic in content!{
             arrName.append(dic.valueForKey("name") as String)
             arrPhone.append(dic.valueForKey("phone") as String)
-            arrMail.append(dic.valueForKey("mail") as String)
+            arrEmail.append(dic.valueForKey("mail") as String)
         }
         
-        return (arrName,arrPhone,arrMail)
+        return (arrName,arrPhone,arrEmail)
     }
     
     func delContactFromNS(name: String) {
@@ -221,15 +221,15 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func delContactFromPlist(name: String) {
         let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
         
-        var content = NSMutableArray(contentsOfFile: path)!
+        var content = NSMutableArray(contentsOfFile: path)
         
-        for (idx, dic) in enumerate(content){
+        for dic in content!{
             if dic["name"] as String == name{
-                content.removeObject(dic)
+                content!.removeObject(dic)
             }
         }
         
-        content.writeToFile(path, atomically: true)
+        content!.writeToFile(path, atomically: true)
         
     }
     
