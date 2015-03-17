@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDelegate{
     
@@ -83,11 +84,11 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
         
         if validEmail == true && validPhone == true{
             var dicContact: NSDictionary?
-            if keyType == "NSUserdefault"{
-                dicContact = ["name":tfName.text, "phone":tfPhone.text, "email":tfEmail.text]
-            }
+
             if keyType == "Plist file"{
                 dicContact = ["name":tfName.text, "phone":tfPhone.text, "mail":tfEmail.text]
+            }else{
+                    dicContact = ["name":tfName.text, "phone":tfPhone.text, "email":tfEmail.text]
             }
             
             addNewSuccess = addNewContact(dicContact!)
@@ -193,6 +194,84 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
         
         }
         
+        if keyType == "CoreData"{
+            
+            if checkNew == true{
+                if validName(dicContact["name"] as String) {
+                    
+                    //1
+                    let appDelegate =
+                    UIApplication.sharedApplication().delegate as AppDelegate
+                    
+                    let managedContext = appDelegate.managedObjectContext!
+                    
+                    //2
+                    let entity =  NSEntityDescription.entityForName("Contact",
+                        inManagedObjectContext:
+                        managedContext)
+                    
+                    let person = NSManagedObject(entity: entity!,
+                        insertIntoManagedObjectContext:managedContext)
+                    
+                    //3
+                    person.setValue(dicContact["name"], forKey: "name")
+                    person.setValue(dicContact["phone"], forKey: "phone")
+                    person.setValue(dicContact["email"], forKey: "email")
+                    //4
+                    var error: NSError?
+                    if !managedContext.save(&error) {
+                        println("Could not save \(error), \(error?.userInfo)")
+                    }  
+                    //5
+//                    people.append(person)
+                    
+                    return true
+                    
+                }else{
+                    return false
+                }
+                
+            }else{
+                if validName(dicContact["name"] as String) || (dicContact["name"] as? String == selectedName){
+                    
+                    //1
+                    let appDelegate =
+                    UIApplication.sharedApplication().delegate as AppDelegate
+                    
+                    let managedContext = appDelegate.managedObjectContext!
+                    
+                    //        
+                    let fetchRequest = NSFetchRequest(entityName: "Contact")
+                    
+                    var error: NSError?
+                    
+                    let fetchchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [NSManagedObject]?
+                    
+                    var coreContact  = [NSManagedObject]()
+                    
+                    if let results = fetchchedResults {
+                        coreContact = results
+                        println("Core contact \(coreContact)")
+                    }else{
+                        println("Could not fetch \(error), \(error?.userInfo)")
+                    }
+                    
+                    for dic in coreContact{
+                        if dic.valueForKey("name") as? String == selectedName{
+                            dic.setValue(dicContact["name"], forKey: "name")
+                            dic.setValue(dicContact["phone"], forKey: "phone")
+                            dic.setValue(dicContact["email"], forKey: "email")
+                            return true
+                        }
+                    }
+                }else{
+                    return false
+                }
+            }
+            
+        }
+
+        
         return false
         
     }
@@ -268,6 +347,40 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
             return true
         
         }
+        
+        if keyType == "CoreData"{
+            
+            let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+            let managedContext = appDelegate.managedObjectContext!
+            
+            let fetchRequest = NSFetchRequest(entityName: "Contact")
+            
+            var error: NSError?
+            
+            let fetchchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [NSManagedObject]?
+            
+            if let results = fetchchedResults {
+                var coreContact = results
+                println("Core contact \(coreContact)")
+            }else{
+                println("Could not fetch \(error), \(error?.userInfo)")
+            }
+            
+            if (fetchchedResults != nil){
+                for (idx, dic) in enumerate(fetchchedResults!){
+                    var name1 = dic.valueForKey("name") as String
+                    if name == name1{
+                        self.validName = false
+                        return false
+                    }
+                }
+            }
+            
+            self.validName = true
+            return true
+            
+        }
+
         
         return false
         

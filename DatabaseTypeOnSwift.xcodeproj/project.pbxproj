@@ -39,6 +39,7 @@
 		A7D929B11A70EF1400AACA35 /* ValidationRuleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D929A21A70EF1400AACA35 /* ValidationRuleType.swift */; };
 		A7D929B21A70EF1400AACA35 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D929A31A70EF1400AACA35 /* Validator.swift */; };
 		A7D929B31A70EF1400AACA35 /* ZipCodeValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D929A41A70EF1400AACA35 /* ZipCodeValidation.swift */; };
+		A7D933A91AB4399F00038A84 /* contact.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A7D933A81AB4399F00038A84 /* contact.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		A7D929A21A70EF1400AACA35 /* ValidationRuleType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationRuleType.swift; sourceTree = "<group>"; };
 		A7D929A31A70EF1400AACA35 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		A7D929A41A70EF1400AACA35 /* ZipCodeValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipCodeValidation.swift; sourceTree = "<group>"; };
+		A7D933A81AB4399F00038A84 /* contact.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = contact.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				A76E13221A6F622B0017C497 /* Images */,
 				A76E12FE1A6F46D40017C497 /* Info.plist */,
 				A713D0FD1AB2DD30007B8AFE /* contact.plist */,
+				A7D933A81AB4399F00038A84 /* contact.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7D933A91AB4399F00038A84 /* contact.rtf in Resources */,
 				A7D3A2751A70A61600DF2373 /* XML file.png in Resources */,
 				A76E13081A6F46D40017C497 /* Main.storyboard in Resources */,
 				A7D3A2781A70A61600DF2373 /* CoreData.png in Resources */,

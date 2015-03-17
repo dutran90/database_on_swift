@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -31,6 +32,8 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     var is_searching:Bool!   // It's flag for searching
     
+    var coreContact  = [NSManagedObject]()
+    
     override func viewDidLoad() {
         
         println(self.keyType)
@@ -47,6 +50,20 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         if keyType == "Plist file"{
         
             (arrName, arrPhone, arrMail) = getContactFromPlist()
+            (filteredName, filteredPhone, filteredMail) = ([],[],[])
+            
+        }
+        
+        if keyType == "Text file"{
+            
+            (arrName, arrPhone, arrMail) = getContactFromText()
+            (filteredName, filteredPhone, filteredMail) = ([],[],[])
+            
+        }
+        
+        if keyType == "CoreData"{
+            
+            (arrName, arrPhone, arrMail) = getContactFromCoreData()
             (filteredName, filteredPhone, filteredMail) = ([],[],[])
             
         }
@@ -138,6 +155,9 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             if keyType == "Plist file"{
                 delContactFromPlist(name)
             }
+            if keyType == "CoreData"{
+                delContactFromCoreData(name)
+            }
         }
     }
     
@@ -207,6 +227,62 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         return (arrName,arrPhone,arrEmail)
     }
     
+    func getContactFromText() -> ([String], [String], [String]){
+        
+        var arrName = [String]()
+        var arrPhone = [String]()
+        var arrEmail = [String]()
+        
+        let path = NSBundle.mainBundle().pathForResource("contact", ofType: "rtf")!
+        
+        var content = NSString(contentsOfFile: path, usedEncoding: nil, error: nil)
+        
+        var ct = NSString(contentsOfFile: path, usedEncoding: nil, error: nil)
+        
+        println(content)
+        println(ct)
+        
+//        for dic in content{
+//            arrName.append(dic.valueForKey("name") as String)
+//            arrPhone.append(dic.valueForKey("phone") as String)
+//            arrEmail.append(dic.valueForKey("mail") as String)
+//        }
+        
+        return (arrName,arrPhone,arrEmail)
+    }
+    
+    func getContactFromCoreData() -> ([String], [String], [String]){
+        
+        var arrName = [String]()
+        var arrPhone = [String]()
+        var arrEmail = [String]()
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let managedContext = appDelegate.managedObjectContext!
+        
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        
+        var error: NSError?
+        
+        let fetchchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [NSManagedObject]?
+        
+        if let results = fetchchedResults {
+            coreContact = results
+            println("Core contact \(coreContact)")
+        }else{
+            println("Could not fetch \(error), \(error?.userInfo)")
+        }
+        
+        for dic in coreContact{
+            arrName.append(dic.valueForKey("name") as String)
+            arrPhone.append(dic.valueForKey("phone") as String)
+            arrEmail.append(dic.valueForKey("email") as String)
+        }
+        
+        return (arrName,arrPhone,arrEmail)
+    }
+
+    
     func delContactFromNS(name: String) {
         let ud = NSUserDefaults.standardUserDefaults()
         let arrDic = ud.valueForKey("arrDicContact") as NSMutableArray
@@ -216,6 +292,27 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 println("Array Dic after delete \(arrDic)")
             }
         }
+    }
+    
+    func delContactFromCoreData(name: String) {
+        //1
+        let appDelegate =
+        UIApplication.sharedApplication().delegate as AppDelegate
+        
+        let managedContext = appDelegate.managedObjectContext!
+        
+        let fetchRequest = NSFetchRequest(entityName: "Contact")
+        
+        var error: NSError?
+        
+        let fetchchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [NSManagedObject]?
+        
+        for dic in fetchchedResults!{
+            if dic.valueForKey("name") as String == name{
+                managedContext.deleteObject(dic)
+            }
+        }
+        
     }
     
     func delContactFromPlist(name: String) {
