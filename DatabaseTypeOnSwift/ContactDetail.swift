@@ -33,6 +33,8 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
     var selectedPhone: String?
     var selectedEmail: String?
     
+    var databasePath = NSString()
+    
     override func viewDidLoad() {
         
         //valid mail and phone
@@ -270,6 +272,81 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
             }
             
         }
+        
+        if keyType == "SQLlite"{
+            
+            let dirPaths =
+            NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
+                .UserDomainMask, true)
+            
+            let docsDir = dirPaths[0] as String
+            
+            databasePath = docsDir.stringByAppendingPathComponent(
+                "contacts.db")
+
+            
+            if checkNew == true{
+                if validName(dicContact["name"] as String) {
+                    
+                    let contactDB = FMDatabase(path: databasePath)
+                    
+                    if contactDB.open() {
+                        
+                        let name = dicContact["name"] as String
+                        let phone = dicContact["phone"] as String
+                        let email = dicContact["email"] as String
+                        
+                        let insertSQL = "INSERT INTO CONTACTS (name, phone, email) VALUES ('\(name)', '\(phone)', '\(email)')"
+                        
+                        let result = contactDB.executeUpdate(insertSQL,
+                            withArgumentsInArray: nil)
+                        
+                        if !result {
+                            println("Error: \(contactDB.lastErrorMessage())")
+                        }
+                        contactDB.close()
+                        
+                    } else {
+                        println("Error: \(contactDB.lastErrorMessage())")
+                    }
+                    return true
+                    
+                }else{
+                    return false
+                }
+                
+            }else{
+                if validName(dicContact["name"] as String) || (dicContact["name"] as? String == selectedName){
+                    
+                    let name1 = dicContact["name"] as String
+                    let phone1 = dicContact["phone"] as String
+                    let email1 = dicContact["email"] as String
+                    
+                    let contactDB = FMDatabase(path: databasePath)
+                    
+                    if contactDB.open() {
+                        
+                        let updateSQL = "UPDATE CONTACTS SET name = '\(name1)', phone = '\(phone1)', email = '\(email1)' WHERE name = 'b'"
+                        
+                        let result = contactDB.executeUpdate(updateSQL, withArgumentsInArray: nil)
+                        
+                        if !result {
+                            println("Error: \(contactDB.lastErrorMessage())")
+                        }
+                        contactDB.close()
+                    
+                    } else {
+                        println("Error: \(contactDB.lastErrorMessage())")
+                    }
+                    return true
+                
+                }else{
+                    return false
+                }
+            }
+            
+        }
+
 
         
         return false
@@ -380,6 +457,37 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
             return true
             
         }
+        
+        if keyType == "SQLlite"{
+            
+            let contactDB = FMDatabase(path: databasePath)
+            
+            if contactDB.open() {
+                let querySQL = "SELECT name FROM CONTACTS WHERE name = '\(name)'"
+                
+                let results:FMResultSet? = contactDB.executeQuery(querySQL,
+                    withArgumentsInArray: nil)
+            
+                var flag = true
+                while results?.next() == true{
+                    if results?.stringForColumn("name") == name{
+                        flag = false
+                        break
+                    }
+                }
+                
+                if (results != nil && flag == false){
+                        self.validName = false
+                        return false
+                }
+                contactDB.close()
+            }
+            
+            self.validName = true
+            return true
+            
+        }
+
 
         
         return false

@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		A713D0FE1AB2DD30007B8AFE /* contact.plist in Resources */ = {isa = PBXBuildFile; fileRef = A713D0FD1AB2DD30007B8AFE /* contact.plist */; };
+		A76757D41AB8673400CEA5B2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A76757D31AB8673400CEA5B2 /* libsqlite3.dylib */; };
+		A76757E11AB86CF800CEA5B2 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A76757D71AB86CF800CEA5B2 /* FMDatabase.m */; };
+		A76757E21AB86CF800CEA5B2 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A76757D91AB86CF800CEA5B2 /* FMDatabaseAdditions.m */; };
+		A76757E31AB86CF800CEA5B2 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A76757DB1AB86CF800CEA5B2 /* FMDatabasePool.m */; };
+		A76757E41AB86CF800CEA5B2 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A76757DD1AB86CF800CEA5B2 /* FMDatabaseQueue.m */; };
+		A76757E51AB86CF800CEA5B2 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A76757E01AB86CF800CEA5B2 /* FMResultSet.m */; };
 		A76E13001A6F46D40017C497 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76E12FF1A6F46D40017C497 /* AppDelegate.swift */; };
 		A76E13031A6F46D40017C497 /* DatabaseTypeOnSwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A76E13011A6F46D40017C497 /* DatabaseTypeOnSwift.xcdatamodeld */; };
 		A76E13051A6F46D40017C497 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76E13041A6F46D40017C497 /* ViewController.swift */; };
@@ -54,6 +60,19 @@
 
 /* Begin PBXFileReference section */
 		A713D0FD1AB2DD30007B8AFE /* contact.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = contact.plist; sourceTree = "<group>"; };
+		A76757D31AB8673400CEA5B2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A76757D61AB86CF800CEA5B2 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		A76757D71AB86CF800CEA5B2 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		A76757D81AB86CF800CEA5B2 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		A76757D91AB86CF800CEA5B2 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		A76757DA1AB86CF800CEA5B2 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		A76757DB1AB86CF800CEA5B2 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		A76757DC1AB86CF800CEA5B2 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		A76757DD1AB86CF800CEA5B2 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		A76757DE1AB86CF800CEA5B2 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		A76757DF1AB86CF800CEA5B2 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		A76757E01AB86CF800CEA5B2 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		A76757E61AB86F0800CEA5B2 /* DatabaseTypeOnSwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DatabaseTypeOnSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		A76E12FA1A6F46D30017C497 /* DatabaseTypeOnSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DatabaseTypeOnSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76E12FE1A6F46D40017C497 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A76E12FF1A6F46D40017C497 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A76757D41AB8673400CEA5B2 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,9 +130,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A76757D51AB86CF800CEA5B2 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				A76757D61AB86CF800CEA5B2 /* FMDatabase.h */,
+				A76757D71AB86CF800CEA5B2 /* FMDatabase.m */,
+				A76757D81AB86CF800CEA5B2 /* FMDatabaseAdditions.h */,
+				A76757D91AB86CF800CEA5B2 /* FMDatabaseAdditions.m */,
+				A76757DA1AB86CF800CEA5B2 /* FMDatabasePool.h */,
+				A76757DB1AB86CF800CEA5B2 /* FMDatabasePool.m */,
+				A76757DC1AB86CF800CEA5B2 /* FMDatabaseQueue.h */,
+				A76757DD1AB86CF800CEA5B2 /* FMDatabaseQueue.m */,
+				A76757DE1AB86CF800CEA5B2 /* FMDB.h */,
+				A76757DF1AB86CF800CEA5B2 /* FMResultSet.h */,
+				A76757E01AB86CF800CEA5B2 /* FMResultSet.m */,
+			);
+			path = fmdb;
+			sourceTree = "<group>";
+		};
 		A76E12F11A6F46D20017C497 = {
 			isa = PBXGroup;
 			children = (
+				A76757D31AB8673400CEA5B2 /* libsqlite3.dylib */,
 				A76E12FC1A6F46D30017C497 /* DatabaseTypeOnSwift */,
 				A76E13151A6F46D40017C497 /* DatabaseTypeOnSwiftTests */,
 				A76E12FB1A6F46D30017C497 /* Products */,
@@ -141,6 +180,7 @@
 				A76E130B1A6F46D40017C497 /* LaunchScreen.xib */,
 				A76E13011A6F46D40017C497 /* DatabaseTypeOnSwift.xcdatamodeld */,
 				A76E12FD1A6F46D40017C497 /* Supporting Files */,
+				A76757E61AB86F0800CEA5B2 /* DatabaseTypeOnSwift-Bridging-Header.h */,
 			);
 			path = DatabaseTypeOnSwift;
 			sourceTree = "<group>";
@@ -148,6 +188,7 @@
 		A76E12FD1A6F46D40017C497 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A76757D51AB86CF800CEA5B2 /* fmdb */,
 				A7D929961A70EF1400AACA35 /* EmailValidation.swift */,
 				A7D929971A70EF1400AACA35 /* FullNameValidation.swift */,
 				A7D929981A70EF1400AACA35 /* MaxLengthValidation.swift */,
@@ -315,11 +356,16 @@
 				A7D929A51A70EF1400AACA35 /* EmailValidation.swift in Sources */,
 				A7D929A61A70EF1400AACA35 /* FullNameValidation.swift in Sources */,
 				A7D929AA1A70EF1400AACA35 /* PhoneNumberValidation.swift in Sources */,
+				A76757E51AB86CF800CEA5B2 /* FMResultSet.m in Sources */,
 				A7D929B01A70EF1400AACA35 /* ValidationRule.swift in Sources */,
 				A7D929AC1A70EF1400AACA35 /* Validation.swift in Sources */,
 				A7D929AF1A70EF1400AACA35 /* ValidationFactory.swift in Sources */,
+				A76757E11AB86CF800CEA5B2 /* FMDatabase.m in Sources */,
+				A76757E41AB86CF800CEA5B2 /* FMDatabaseQueue.m in Sources */,
+				A76757E21AB86CF800CEA5B2 /* FMDatabaseAdditions.m in Sources */,
 				A7D929681A70E96900AACA35 /* ContactDetail.swift in Sources */,
 				A7D929A81A70EF1400AACA35 /* MinLengthValidation.swift in Sources */,
+				A76757E31AB86CF800CEA5B2 /* FMDatabasePool.m in Sources */,
 				A76E13031A6F46D40017C497 /* DatabaseTypeOnSwift.xcdatamodeld in Sources */,
 				A7D929B21A70EF1400AACA35 /* Validator.swift in Sources */,
 				A7D929A91A70EF1400AACA35 /* PasswordValidation.swift in Sources */,
@@ -457,6 +503,7 @@
 				INFOPLIST_FILE = DatabaseTypeOnSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DatabaseTypeOnSwift-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -467,6 +514,7 @@
 				INFOPLIST_FILE = DatabaseTypeOnSwift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DatabaseTypeOnSwift-Bridging-Header.h";
 			};
 			name = Release;
 		};

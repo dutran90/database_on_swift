@@ -34,6 +34,8 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     var coreContact  = [NSManagedObject]()
     
+    var databasePath = NSString()
+    
     override func viewDidLoad() {
         
         println(self.keyType)
@@ -64,6 +66,43 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         if keyType == "CoreData"{
             
             (arrName, arrPhone, arrMail) = getContactFromCoreData()
+            (filteredName, filteredPhone, filteredMail) = ([],[],[])
+            
+        }
+        
+        if keyType == "SQLlite"{
+            
+            //Create database
+            let filemgr = NSFileManager.defaultManager()
+            let dirPaths =
+            NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
+                .UserDomainMask, true)
+            
+            let docsDir = dirPaths[0] as String
+            
+            databasePath = docsDir.stringByAppendingPathComponent(
+                "contacts.db")
+            
+            if !filemgr.fileExistsAtPath(databasePath) {
+                
+                let contactDB = FMDatabase(path: databasePath)
+                
+                if contactDB == nil {
+                    println("Error: \(contactDB.lastErrorMessage())")
+                }
+                
+                if contactDB.open() {
+                    let sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME, PHONE, EMAIL)"
+                    if !contactDB.executeStatements(sql_stmt) {
+                        println("Error: \(contactDB.lastErrorMessage())")
+                    }
+                    contactDB.close()
+                } else {
+                    println("Error: \(contactDB.lastErrorMessage())")
+                }
+            }
+            
+            (arrName, arrPhone, arrMail) = getContactFromSQLlite()
             (filteredName, filteredPhone, filteredMail) = ([],[],[])
             
         }
@@ -157,6 +196,9 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             }
             if keyType == "CoreData"{
                 delContactFromCoreData(name)
+            }
+            if keyType == "SQLlite"{
+                delContactFromSQLlite(name)
             }
         }
     }
@@ -282,6 +324,42 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         return (arrName,arrPhone,arrEmail)
     }
 
+    func getContactFromSQLlite() -> ([String], [String], [String]){
+        
+        var arrName = [String]()
+        var arrPhone = [String]()
+        var arrEmail = [String]()
+        
+        let contactDB = FMDatabase(path: databasePath)
+        
+        if contactDB.open() {
+            let querySQL = "SELECT name, phone, email FROM CONTACTS"
+            
+            let results:FMResultSet? = contactDB.executeQuery(querySQL,
+                withArgumentsInArray: nil)!
+            
+            println(results)
+
+            if results?.next() == true{
+                
+                while (results?.next() ==  true){
+                    var n = results?.stringForColumn("name")
+                    var p = results?.stringForColumn("phone")
+                    var e = results?.stringForColumn("email")
+                    
+                    arrName.append(n!)
+                    arrPhone.append(p!)
+                    arrEmail.append(e!)
+                }
+            
+            }
+            
+            contactDB.close()
+        }
+        
+        return (arrName,arrPhone,arrEmail)
+    }
+
     
     func delContactFromNS(name: String) {
         let ud = NSUserDefaults.standardUserDefaults()
@@ -328,6 +406,24 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         content!.writeToFile(path, atomically: true)
         
+    }
+    
+    func delContactFromSQLlite(name: String) {
+        let contactDB = FMDatabase(path: databasePath)
+        
+        if contactDB.open() {
+            let querySQL = "DELETE FROM CONTACTS WHERE name = '\(name)'"
+            
+            let result = contactDB.executeStatements(querySQL)
+            
+            let results:FMResultSet? = contactDB.executeQuery(querySQL,
+                withArgumentsInArray: nil)
+            
+            if (results != nil){
+                println("error!")
+            }
+            contactDB.close()
+        }
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
