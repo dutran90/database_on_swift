@@ -200,6 +200,9 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             if keyType == "SQLlite"{
                 delContactFromSQLlite(name)
             }
+            if keyType == "Text file"{
+                delContactFromText(name)
+            }
         }
     }
     
@@ -275,20 +278,31 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         var arrPhone = [String]()
         var arrEmail = [String]()
         
-        let path = NSBundle.mainBundle().pathForResource("contact", ofType: "rtf")!
+        let url = NSBundle.mainBundle().URLForResource("contact", withExtension: "rtf")
         
-        var content = NSString(contentsOfFile: path, usedEncoding: nil, error: nil)
+        var atStr = NSAttributedString(fileURL: url, options: [NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType], documentAttributes: nil, error: nil)
         
-        var ct = NSString(contentsOfFile: path, usedEncoding: nil, error: nil)
+        var str = atStr?.string
         
-        println(content)
-        println(ct)
+        var arrContact = str?.componentsSeparatedByString("\n")
         
-//        for dic in content{
-//            arrName.append(dic.valueForKey("name") as String)
-//            arrPhone.append(dic.valueForKey("phone") as String)
-//            arrEmail.append(dic.valueForKey("mail") as String)
-//        }
+        if arrContact == nil{
+            if str == nil{
+                (arrName, arrPhone, arrEmail) = ([],[],[])
+            }else{
+                let info = str?.componentsSeparatedByString("\t") as Array!
+                arrName.append(info[0])
+                arrPhone.append(info[1])
+                arrEmail.append(info[2])
+            }
+        }else{
+            for (idx, ct) in enumerate(arrContact!){
+                let info = ct.componentsSeparatedByString("\t")
+                arrName.append(info[0])
+                arrPhone.append(info[1])
+                arrEmail.append(info[2])
+            }
+        }
         
         return (arrName,arrPhone,arrEmail)
     }
@@ -425,6 +439,54 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             contactDB.close()
         }
     }
+    
+    func delContactFromText(name: String) {
+        let url = NSBundle.mainBundle().URLForResource("contact", withExtension: "rtf")
+        let path = NSBundle.mainBundle().pathForResource("contact", ofType: "rtf")
+        
+        var atStr = NSAttributedString(fileURL: url, options: [NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType], documentAttributes: nil, error: nil)
+        
+        var str = atStr?.string
+        
+        var newStr = ""
+        
+        var arrContact = str?.componentsSeparatedByString("\n")
+        
+        if arrContact == nil{
+            newStr.writeToFile(path!, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+            return
+        }else{
+            if arrContact?.count == 1{
+                for (idx, ct) in enumerate(arrContact!){
+                    let info = ct.componentsSeparatedByString("\t")
+                    if info[0] != name{
+                        newStr = newStr + info[0]
+                        newStr = newStr + "\t" + info[1] + "\t" + info[2]
+                    }
+                }
+                var errors: NSError?
+                newStr.writeToFile(path!, atomically: true, encoding: NSUTF8StringEncoding, error: &errors)
+                if let theError = errors {
+                    print("\(theError.localizedDescription)")
+                }
+
+            }else{
+                for (idx, ct) in enumerate(arrContact!){
+                    let info = ct.componentsSeparatedByString("\t")
+                    if info[0] != name{
+                        newStr = newStr + "\n" + info[0]
+                        newStr = newStr + "\t" + info[1] + "\t" + info[2]
+                    }
+                }
+                var errors: NSError?
+                newStr.writeToFile(path!, atomically: true, encoding: NSUTF8StringEncoding, error: &errors)
+                if let theError = errors {
+                    print("\(theError.localizedDescription)")
+                }
+            }
+        }
+    }
+
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true

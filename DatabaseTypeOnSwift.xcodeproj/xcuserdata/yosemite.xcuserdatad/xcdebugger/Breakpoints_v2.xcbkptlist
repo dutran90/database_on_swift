@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DatabaseTypeOnSwift/ContactDetail.swift"
-            timestampString = "448510612.074052"
+            timestampString = "448604330.437361"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
-            landmarkName = "addNewContact(_:)"
+            startingLineNumber = "552"
+            endingLineNumber = "552"
+            landmarkName = "validName(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

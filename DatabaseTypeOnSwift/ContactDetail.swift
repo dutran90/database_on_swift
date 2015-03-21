@@ -347,6 +347,67 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
             
         }
 
+        if keyType == "Text file"{
+            
+            let name1 = dicContact["name"] as String
+            let phone1 = dicContact["phone"] as String
+            let email1 = dicContact["email"] as String
+            
+            if checkNew == true{
+                if validName(dicContact["name"] as String) {
+                    
+                    let url = NSBundle.mainBundle().URLForResource("contact", withExtension: "rtf")
+                    let path = NSBundle.mainBundle().pathForResource("contact", ofType: "rtf")
+                    
+                    var atStr = NSAttributedString(fileURL: url, options: [NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType], documentAttributes: nil, error: nil)
+                    
+                    var str = atStr?.string
+                    
+                    var newStr = ""
+                    
+                    var arrContact = str?.componentsSeparatedByString("\n")
+                    
+                    if arrContact == nil && str == nil{
+                        newStr = newStr + name1 + "\t" + phone1 + "t" + email1
+                        newStr.writeToFile(path!, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+                        return true
+                    }
+                    if arrContact == nil && str != nil{
+                    
+                        newStr = newStr + "\n" + name1 + "\t" + phone1 + "t" + email1
+                        newStr.writeToFile(path!, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+                        return true
+                        
+                    }
+                    if arrContact != nil{
+                        newStr = str! + "\n" + name1 + "\t" + phone1 + "t" + email1
+                        newStr.writeToFile(path!, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+                        
+                        return true
+                    }
+                    
+                }else{
+                    return false
+                }
+                
+            }else{
+                if validName(dicContact["name"] as String) || (dicContact["name"] as? String == selectedName){
+                    
+                    let path = NSBundle.mainBundle().pathForResource("contact", ofType: "plist")!
+                    var content = NSMutableArray(contentsOfFile: path)!
+                    for (idx, dic) in enumerate(content){
+                        if dic.valueForKey("name") as? String == selectedName{
+                            content[idx] = dicContact
+                            content.writeToFile(path, atomically: true)
+                            return true
+                        }
+                    }
+                }else{
+                    return false
+                }
+            }
+            
+        }
 
         
         return false
@@ -488,7 +549,40 @@ class ContactDetail: UIViewController, UITextFieldDelegate , ValidationFieldDele
             
         }
 
-
+        if keyType == "Text file"{
+            
+            let url = NSBundle.mainBundle().URLForResource("contact", withExtension: "rtf")
+            
+            var atStr = NSAttributedString(fileURL: url, options: [NSDocumentTypeDocumentAttribute:NSRTFTextDocumentType], documentAttributes: nil, error: nil)
+            
+            var str = atStr?.string
+            
+            var arrContact = str?.componentsSeparatedByString("\n")
+            
+            if arrContact == nil{
+                if str == nil{
+                    self.validName = true
+                    return true
+                }else{
+                    let info = str?.componentsSeparatedByString("\t") as Array!
+                    if info[0] == name{
+                        self.validName = false
+                        return false
+                    }
+                }
+            }else{
+                for (idx, ct) in enumerate(arrContact!){
+                    let info = ct.componentsSeparatedByString("\t")
+                    if info[0] == name{
+                        self.validName = false
+                        return false
+                    }
+                }
+            }
+    
+            self.validName = true
+            return true
+        }
         
         return false
         
